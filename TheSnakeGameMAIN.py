@@ -1,6 +1,14 @@
 from turtle import *
 import time 
 import random
+import winsound
+
+
+def eat_food():
+    winsound.PlaySound("Eat_sound.wav", winsound.SND_ASYNC)
+
+def game_over():
+    winsound.PlaySound("Game_Over.wav", winsound.SND_ASYNC)
 
 score=0 
 execution_delay=0.3
@@ -93,6 +101,7 @@ while True:
     root.update()
 
     if head.xcor()>255 or head.xcor()<-255 or head.ycor()>240 or head.ycor()<-240:
+        game_over()
         lost.write('Game Lost',align='center',font=('courier,34,bold'))
         head.goto(0,0)
         head.direction='stop'
@@ -109,19 +118,20 @@ while True:
 
 
     if head.distance(food)<20:
-       x=random.randint(-255,255)
-       y=random.randint(-255,255) 
-       food.goto(x,y)
-       execution_delay=execution_delay-0.003
+        eat_food()
+        x=random.randint(-255,255)
+        y=random.randint(-255,255) 
+        food.goto(x,y)
+        execution_delay=execution_delay-0.003
 
-       body=Turtle()
-       body.penup()
-       body.shape('body.gif')
-       segments.append(body)
+        body=Turtle()
+        body.penup()
+        body.shape('body.gif')
+        segments.append(body)
 
-       score=score+10
-       text.clear()
-       text.write(f'Score:{score}',font=('Algerian'))
+        score=score+10
+        text.clear()
+        text.write(f'Score:{score}',font=('Algerian'))
 
 
 
@@ -150,16 +160,12 @@ while True:
             score=0
             execution_delay=0.3
 
-            lost.write('Game Lost',align='center',font=('courier,34,bold'))
+            lost.write('Game Lost',align='center')
             time.sleep(1)
             lost.clear()
 
             text.clear()
             text.write('Score:0',align='center', font=('Algerian'))   
             
-
-
-
-
 
     time.sleep(execution_delay)
