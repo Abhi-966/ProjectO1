@@ -149,6 +149,7 @@ while True:
 
     for bodies in segments:
         if bodies.distance(head)<20:
+            game_over()
             time.sleep(1)
             head.goto(0,0)
             head.direction=('stop')
